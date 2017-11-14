@@ -20,3 +20,7 @@
 .byebug_history
 .idea/
 tags
+
+# Ignore vim temporary files
+**/*.swp
+**/*.swo
