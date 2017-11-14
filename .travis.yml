@@ -1,0 +1,26 @@
+language: ruby
+
+bundler_args: '--without production'
+
+services:
+  - redis-server
+
+rvm:
+  - 2.4.1
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - rvm: ruby-head
+
+before_install:
+  - "gem install bundler --pre"
+  - "bundle -v"
+  - cp config/database.yml.default config/database.yml
+
+before_script:
+  - RAILS_ENV=test bundle exec rake db:migrate
+
+script:
+  - bundle exec rubocop .
+  - RAILS_ENV=test bundle exec rake spec
